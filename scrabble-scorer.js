@@ -105,7 +105,7 @@ function scorerPrompt() {
   while (pick !== 0 && pick !== 1 && pick !== 2) {
     pick = Number(input.question("Enter 0, 1, or 2: "));
   }
-  return scoringAlgorithms[pick];
+  return scoringAlgorithms[pick].scorerFunction;
 }
 
 function transform(object) {
@@ -124,7 +124,7 @@ newPointStructure[" "] = 0;
 function runProgram() {
   wordChoice = initialPrompt();
   algoChoice = scorerPrompt();
-  return console.log(`Score for '${wordChoice}': ${algoChoice.scorerFunction(wordChoice)}`);
+  return console.log(`Score for '${wordChoice}': ${algoChoice(wordChoice)}`);
 }
 
 // Don't write any code below this line //
