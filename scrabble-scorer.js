@@ -45,52 +45,40 @@ function initialPrompt() {
   return inputWord;
 };
 
-let simpleScore = {
-  name: "Simple Score",
-  description: "Each letter is worth 1 point.",
-  scorerFunction: function(word) {
-    word = word.toUpperCase();
-    let score = 0;
-    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    for (let i = 0; i < word.length; i++) {
-      if (letters.includes(word[i])) {
-        score += 1;
-      }
+let simpleScore = function(word) {
+  word = word.toUpperCase();
+  let score = 0;
+  let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  for (let i = 0; i < word.length; i++) {
+    if (letters.includes(word[i])) {
+      score += 1;
     }
-    return score;
   }
+  return score;
 };
 
-let vowelBonusScore = {
-  name: "Bonus Vowels",
-  description: "Vowels are 3 pts, consonants are 1 pt.",
-  scorerFunction: function(word) {
-    word = word.toUpperCase();
-    let score = 0;
-    let vowels = "AEIOU";
-    let consonants = "BCDFGHJKLMNPQRSTVWXYZ"
-    for (let i = 0; i < word.length; i++) {
-      if (vowels.includes(word[i])) {
-        score += 3;
-      } else if (consonants.includes(word[i])) {
-        score += 1;
-      }
+let vowelBonusScore = function(word) {
+  word = word.toUpperCase();
+  let score = 0;
+  let vowels = "AEIOU";
+  let consonants = "BCDFGHJKLMNPQRSTVWXYZ"
+  for (let i = 0; i < word.length; i++) {
+    if (vowels.includes(word[i])) {
+      score += 3;
+    } else if (consonants.includes(word[i])) {
+      score += 1;
     }
-    return score;
   }
+  return score;
 };
 
-let scrabbleScore = {
-  name: "Scrabble",
-  description: "The traditional scoring algorithm.",
-  scorerFunction: function(word) {
-    word = word.toLowerCase();
-    let score = 0;
-    for (let i = 0; i < word.length; i++) {
-      score += newPointStructure[word[i]]
-    }
-    return score;
+let scrabbleScore = function(word) {
+  word = word.toLowerCase();
+  let score = 0;
+  for (let i = 0; i < word.length; i++) {
+    score += newPointStructure[word[i]]
   }
+  return score;
 };
 
 const scoringAlgorithms = [simpleScore, vowelBonusScore, scrabbleScore];
@@ -105,7 +93,7 @@ function scorerPrompt() {
   while (pick !== 0 && pick !== 1 && pick !== 2) {
     pick = Number(input.question("Enter 0, 1, or 2: "));
   }
-  return scoringAlgorithms[pick].scorerFunction;
+  return scoringAlgorithms[pick];
 }
 
 function transform(object) {
